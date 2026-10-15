@@ -1,0 +1,43 @@
+{
+  "_说明": "复制为各模块的 04_工具/consistency_config.json。路径相对模块根目录（config 上一级）。脚本按 enabled_rules 启用规则。",
+  "module": "示例模块",
+  "files": {
+    "md": "02_需求文档/PRD_xxx.md",
+    "h5": "02_需求文档/PRD_xxx_h5.html",
+    "prototype": "03_原型设计/商家后台/demo.html",
+    "prototype_dir": "",
+    "portal": "03_原型设计/xxx_商家端_门户.html"
+  },
+  "enabled_rules": ["R0","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","R11","R12","R13","R14"],
+
+  "risk_rules": [
+    {"key":"red","label":"紧急","lo":0,"hi":2,"row_bg":"risk-red"},
+    {"key":"orange","label":"高","lo":2,"hi":8,"row_bg":"risk-orange"},
+    {"key":"yellow","label":"中","lo":8,"hi":12,"row_bg":""},
+    {"key":"blue","label":"低","lo":12,"hi":72,"row_bg":""}
+  ],
+  "orthogonal_fields": ["紧急程度"],
+  "open_item_marker": "🔵",
+
+  "numeric_claims": [
+    {"claim_regex": "状态 \\| (\\d+) 种颜色 pill", "expected": 7, "note": "状态枚举实际 N 值"},
+    {"claim_regex": "统计维度（(\\d+) 个）", "expected": 5, "note": "实际维度个数"}
+  ],
+  "terms": [
+    {"forbidden": "已失效", "canonical": "已过期", "scope": ["prototype","portal","h5"]}
+  ],
+  "prototype": {
+    "risk_table_anchor": "<!-- 红色紧急 -->",
+    "software_class": "goods-type software",
+    "risk_colors": ["#FF4D4F","#FA8C16","#FAAD14","#1664FF"],
+    "goods_type_selector": "\\.goods-type",
+    "portal_version_selectors": {
+      "current_version": "当前版本[=：]\\s*(\\S+)",
+      "update_time": "更新时间[=：]\\s*(\\S+)",
+      "header_tag": "header-tag[^>]*>\\s*(\\S+)",
+      "title": "<title>([^<]*)</title>"
+    }
+  },
+  "changelog_heading": "变更记录",
+  "precision_keywords": {"second": "精确到秒", "minute_only": "精确到分钟"}
+}

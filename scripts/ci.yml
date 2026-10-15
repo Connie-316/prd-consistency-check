@@ -1,0 +1,32 @@
+# PRD/原型 一致性校验 CI（GitHub Actions）
+# 放到仓库 .github/workflows/consistency-check.yml
+# push / PR 时自动跑仓库内所有 04_工具/check_consistency.py
+name: PRD Consistency Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install markdown
+        run: pip install markdown
+      - name: Find and run all check_consistency.py
+        run: |
+          fail=0
+          while IFS= read -r script; do
+            [ -z "$script" ] && continue
+            echo "▶ $script"
+            python3 "$script" || fail=1
+          done < <(git ls-files | grep '04_工具/check_consistency.py' || true)
+          if [ "$fail" -ne 0 ]; then
+            echo "❌ 存在 PRD 一致性错误，构建失败"
+            exit 1
+          fi
+          echo "✅ 所有 PRD 模块一致性校验通过"

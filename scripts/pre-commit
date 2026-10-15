@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# PRD/原型 一致性门禁（prd-consistency-check）
+# 扫描仓库内所有 04_工具/consistency_config.json，逐个运行同目录 check_consistency.py。
+# 任一模块不通过则阻断提交。
+set -u
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+PY="${PYTHON3:-python3}"
+rc=0
+found=0
+tmp="$(mktemp)"
+trap 'rm -f "$tmp"' EXIT
+
+# 用 find 扫工作树（含未跟踪目录），避免未跟踪目录被 git 折叠成单条记录导致漏扫
+find "$REPO_ROOT" -path '*/04_工具/consistency_config.json' -not -path '*/.git/*' >"$tmp" 2>/dev/null
+
+while IFS= read -r cfg; do
+  [ -z "$cfg" ] && continue
+  found=1
+  tool_dir="$(dirname "$cfg")"
+  echo "===== 校验模块：$(dirname "$(dirname "$cfg")") ====="
+  ( cd "$tool_dir" && "$PY" check_consistency.py ) || rc=1
+done <"$tmp"
+
+if [ "$found" -eq 0 ]; then
+  echo "（未发现 04_工具/consistency_config.json，跳过一致性门禁）"
+fi
+exit $rc
