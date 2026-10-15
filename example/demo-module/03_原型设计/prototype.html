@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>订单履约监控 · 预警列表（示例原型）</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", sans-serif; margin: 24px; color: #1f2328; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #d8dee4; padding: 8px 12px; text-align: left; }
+  th { background: #f6f8fa; }
+  .risk-red { background: #fff1f0; }
+  .risk-orange { background: #fff7e6; }
+  .time-left { font-variant-numeric: tabular-nums; }
+  .time-left.red { color: #cf1322; }
+  .time-left.orange { color: #d46b08; }
+  .time-left.yellow { color: #d4b106; }
+  .time-left.blue { color: #0958d9; }
+  .risk-badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; color: #fff; }
+  .risk-badge.red { background: #cf1322; }
+  .risk-badge.orange { background: #d46b08; }
+  .risk-badge.yellow { background: #d4b106; }
+  .risk-badge.blue { background: #0958d9; }
+  .goods-type { padding: 2px 6px; border-radius: 4px; background: #f1efe8; color: #6B7280; font-size: 12px; }
+  .order-link { color: #0958d9; text-decoration: none; }
+</style>
+</head>
+<body>
+<h1>订单履约监控 · 预警列表</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>订单号</th>
+      <th>客户</th>
+      <th>剩余时间</th>
+      <th>风险等级</th>
+      <th>商品类型</th>
+    </tr>
+  </thead>
+  <tbody>
+  <!-- 红色紧急 -->
+    <tr class="risk-red">
+      <td><a class="order-link">SO-1001</a></td>
+      <td>示例客户 A</td>
+      <td><span class="time-left red">1小时30分</span></td>
+      <td><span class="risk-badge red">紧急</span></td>
+      <td><span class="goods-type">实物商品</span></td>
+    </tr>
+    <tr class="risk-orange">
+      <td><a class="order-link">SO-1002</a></td>
+      <td>示例客户 B</td>
+      <td><span class="time-left orange">5小时</span></td>
+      <td><span class="risk-badge orange">高</span></td>
+      <td><span class="goods-type">实物商品</span></td>
+    </tr>
+    <tr>
+      <td><a class="order-link">SO-1003</a></td>
+      <td>示例客户 C</td>
+      <td><span class="time-left yellow">10小时</span></td>
+      <td><span class="risk-badge yellow">中</span></td>
+      <td><span class="goods-type">实物商品</span></td>
+    </tr>
+    <tr>
+      <td><a class="order-link">SO-1004</a></td>
+      <td>示例客户 D</td>
+      <td><span class="time-left blue">24小时</span></td>
+      <td><span class="risk-badge blue">低</span></td>
+      <td><span class="goods-type">虚拟商品</span></td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
